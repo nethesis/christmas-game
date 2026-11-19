@@ -16,15 +16,18 @@ function asset(string $path): string
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scarta il Regalo</title>
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
-        <div class="top-banner">
-            <img src="images/nethesis.svg" alt="Nethesis Logo" class="logo">
-        </div>
+        <header class="top-banner">
+            <img src="images/nethesis.svg" alt="Nethesis Logo" class="logo" width="1200" height="286">
+        </header>
 
+        <main class="screens">
         <section id="login-section" class="active-section">
             <div class="login-box">
                 <div class="title">
@@ -51,11 +54,11 @@ function asset(string $path): string
 
         <section id="game-section" class="hidden-section">
             <div class="game-box">
-                <h2>Benvenuto, <span id="player-name">Giocatore</span>!</h2>
-                <p>Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
+                <h1 id="game-title" tabindex="-1" aria-describedby="game-hint">Benvenuto, <span id="player-name">Giocatore</span>!</h1>
+                <p id="game-hint">Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
                 <div class="scene" id="scene">
-                    <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img">
-                    <img src="images/tree-opened.svg" alt="Pacco regalo aperto. Auguri da Nethesis!" class="scene-img scene-opened">
+                    <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img" id="tree-closed" width="1440" height="1050">
+                    <img src="images/tree-opened.svg" alt="Pacco regalo aperto. Auguri da Nethesis!" class="scene-img scene-opened" id="tree-opened" width="1440" height="1050" tabindex="-1" aria-hidden="true">
                     <!-- Clickable gift areas are inserted here by game.js -->
                 </div>
                 <div id="game-error" class="error-message" aria-live="polite"></div>
@@ -64,10 +67,10 @@ function asset(string $path): string
 
         <section id="result-section" class="hidden-section">
             <div class="result-container">
-                <h2>Ecco il tuo regalo!</h2>
+                <h1 id="result-title" tabindex="-1" aria-describedby="prize-text">Ecco il tuo regalo!</h1>
                 <div class="prize-card">
-                    <img src="images/prize-card.svg" alt="" class="prize-card-img">
-                    <div class="prize-card-text">
+                    <img src="images/prize-card.svg" alt="" class="prize-card-img" width="935" height="659">
+                    <div class="prize-card-text" id="prize-text">
                         <span class="prize-label">Hai vinto</span>
                         <span id="prize-name" class="prize-name">Un regalo</span>
                     </div>
@@ -78,9 +81,10 @@ function asset(string $path): string
                 </div>
             </div>
         </section>
+        </main>
     </div>
 
-    <div id="snow-container"></div>
+    <div id="snow-container" aria-hidden="true"></div>
 
     <script src="<?= asset('js/snow.js') ?>"></script>
     <script src="<?= asset('js/game.js') ?>"></script>

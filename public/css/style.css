@@ -28,6 +28,18 @@ body {
     flex-direction: column;
 }
 
+main.screens {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Headings and images that receive focus only from script, to announce a new screen */
+h1[tabindex="-1"]:focus,
+.scene-img:focus {
+    outline: none;
+}
+
 /* Every screen fills the space below the banner and centers its box.
    margin: auto (not align-items) so that, when there isn't enough room,
    the box stays below the banner and the page scrolls instead of clipping. */
@@ -103,7 +115,7 @@ input[type="email"]:focus {
 
 input[type="text"]:focus-visible,
 input[type="email"]:focus-visible {
-    outline: 3px solid var(--primary-color);
+    outline: 3px solid var(--secondary-color); /* 4.1:1 on the page background, 4.4:1 on white */
     outline-offset: 2px;
 }
 
@@ -152,7 +164,8 @@ input[type="email"]:focus-visible {
 }
 
 /* Game Section */
-#game-section h2 {
+#game-section h1 {
+    font-size: 1.5em;
     text-align: center;
     color: var(--primary-color);
     margin-bottom: 10px;
@@ -199,7 +212,15 @@ input[type="email"]:focus-visible {
 .gift:hover,
 .gift:focus-visible {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
-    outline: none;
+}
+
+/* Two-tone focus ring: the dark outline contrasts with light areas, the white ring
+   with dark gifts and the tree, so at least one is >= 3:1 against anything nearby.
+   The outline also survives Forced Colors Mode (box-shadow doesn't). */
+.gift:focus-visible {
+    outline: 3px solid #084759;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #ffffff;
 }
 
 .scene.busy .gift {
@@ -227,7 +248,7 @@ input[type="email"]:focus-visible {
     max-width: 640px;
 }
 
-.result-container h2 {
+.result-container h1 {
     color: var(--primary-color);
     font-size: 2em;
     margin-bottom: 10px;

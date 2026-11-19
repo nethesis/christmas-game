@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameError = document.getElementById("game-error");
   const prizeNameSpan = document.getElementById("prize-name");
   const scene = document.getElementById("scene");
+  const treeClosed = document.getElementById("tree-closed");
+  const treeOpened = document.getElementById("tree-opened");
+  const gameTitle = document.getElementById("game-title");
+  const resultTitle = document.getElementById("result-title");
+  const APP_TITLE = document.title;
 
   // Pauses between one screen and the next
   const LOGIN_DELAY_MS = 3000; // login accepted -> tree
@@ -174,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Show game section after the pause
       loginInfo.textContent = `Benvenuto, ${currentPlayerName}! Il gioco sta per iniziare…`;
-      setTimeout(() => showSection(gameSection), LOGIN_DELAY_MS);
+      setTimeout(() => showSection(gameSection, gameTitle, "Scegli il tuo regalo"), LOGIN_DELAY_MS);
     } catch (error) {
       console.error("Error:", error);
       showError("Si è verificato un errore di connessione. Riprova più tardi.");
@@ -192,20 +197,28 @@ document.addEventListener("DOMContentLoaded", () => {
   function revealPrize(prize) {
     prizeNameSpan.textContent = prize;
 
-    // Show the opened gift and the greetings, then the prize card
+    // Show the opened gift and the greetings, then the prize card.
+    // The clicked gift disappears, so move focus to the opened scene (announces the greetings)
     scene.classList.add("opened");
+    treeClosed.setAttribute("aria-hidden", "true");
+    treeOpened.removeAttribute("aria-hidden");
+    treeOpened.focus({ preventScroll: true });
 
     setTimeout(() => {
-      showSection(resultSection);
+      showSection(resultSection, resultTitle, `Hai vinto: ${prize}`);
       startSnow();
     }, SCENE_FADE_MS + PRIZE_DELAY_MS);
   }
 
-  function showSection(section) {
+  // Show one screen, update the tab title and move focus to the new screen's heading,
+  // so keyboard and screen reader users know the screen has changed
+  function showSection(section, focusTarget, title) {
     [loginSection, gameSection, resultSection].forEach((s) => {
       s.classList.toggle("active-section", s === section);
       s.classList.toggle("hidden-section", s !== section);
     });
+    document.title = title ? `${title} | ${APP_TITLE}` : APP_TITLE;
+    focusTarget?.focus({ preventScroll: true });
   }
 
   function showError(message) {
@@ -218,12 +231,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startSnow() {
+    // No snow at all for users who asked the system to reduce motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const snow = new Snowfall("snow-container");
     snow.start();
 
-    // Stop new flakes after SNOW_DURATION_MS; the ones on screen finish falling
-    setTimeout(() => {
+    // Stop new flakes after SNOW_DURATION_MS, or earlier with Esc;
+    // the flakes on screen finish falling and the pile stays
+    const stopSnow = () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", onKeydown);
       snow.stop();
-    }, SNOW_DURATION_MS);
+    };
+    const onKeydown = (event) => {
+      if (event.key === "Escape") {
+        stopSnow();
+      }
+    };
+    const timer = setTimeout(stopSnow, SNOW_DURATION_MS);
+    document.addEventListener("keydown", onKeydown);
   }
 });
