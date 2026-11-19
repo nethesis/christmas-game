@@ -8,9 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameSection = document.getElementById("game-section");
   const resultSection = document.getElementById("result-section");
   const errorMessage = document.getElementById("error-message");
+  const loginInfo = document.getElementById("login-info");
   const gameError = document.getElementById("game-error");
   const prizeNameSpan = document.getElementById("prize-name");
   const scene = document.getElementById("scene");
+
+  // Pauses between one screen and the next
+  const LOGIN_DELAY_MS = 3000; // login accepted -> tree
+  const PRIZE_DELAY_MS = 5000; // opened gift fully visible -> prize card
+  const SCENE_FADE_MS = 800; // keep in sync with .scene-img transition in style.css
 
   // Visible area of the 1440x1050 tree images (the rest is empty background)
   const CROP = { x: 230, y: 130, w: 1000, h: 900 };
@@ -34,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentVatNumber = "";
   let currentPlayerName = "";
   let playing = false;
+  let validating = false;
 
   setupScene();
   preload(["images/tree-opened.svg", "images/prize-card.svg", "images/confetti-bg.svg"]);
@@ -114,6 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function validateVatNumber() {
+    if (validating) {
+      return;
+    }
+
     const vatNumber = vatNumberInput.value.trim();
     const playerEmail = playerEmailInput.value.trim();
 
@@ -127,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
       showError("Inserisci un'email valida.");
       return;
     }
+
+    setLoginBusy(true);
 
     try {
       const response = await fetch("api/validate-vat", {
@@ -145,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ? "Errore! Partita Iva già utilizzata"
             : "Errore nella verifica della Partita IVA"
         );
+        setLoginBusy(false);
         return;
       }
 
@@ -156,12 +170,21 @@ document.addEventListener("DOMContentLoaded", () => {
       playerNameSpan.textContent = currentPlayerName;
       errorMessage.textContent = "";
 
-      // Show game section
-      showSection(gameSection);
+      // Show game section after the pause
+      loginInfo.textContent = `Benvenuto, ${currentPlayerName}! Il gioco sta per iniziare…`;
+      setTimeout(() => showSection(gameSection), LOGIN_DELAY_MS);
     } catch (error) {
       console.error("Error:", error);
       showError("Si è verificato un errore di connessione. Riprova più tardi.");
+      setLoginBusy(false);
     }
+  }
+
+  function setLoginBusy(busy) {
+    validating = busy;
+    validateBtn.disabled = busy;
+    vatNumberInput.disabled = busy;
+    playerEmailInput.disabled = busy;
   }
 
   function revealPrize(prize) {
@@ -173,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       showSection(resultSection);
       startConfetti();
-    }, 2500);
+    }, SCENE_FADE_MS + PRIZE_DELAY_MS);
   }
 
   function showSection(section) {
