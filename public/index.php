@@ -31,21 +31,21 @@ function asset(string $path): string
                     <h1 id="login-title">Scarta il Regalo</h1>
                 </div>
 
-                <div class="form-container">
+                <form id="login-form" class="form-container" method="post" novalidate>
                     <div class="form-group">
                         <label for="vat-number">Partita IVA:</label>
-                        <input type="text" id="vat-number" placeholder="Inserisci la tua Partita IVA" required autofocus aria-describedby="login-title"
+                        <input type="text" id="vat-number" name="vatNumber" placeholder="Inserisci la tua Partita IVA" required autofocus aria-describedby="login-title"
                                autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
                         <label for="player-email">La tua Email:</label>
-                        <input type="email" id="player-email" placeholder="La tua email" required
+                        <input type="email" id="player-email" name="playerEmail" placeholder="La tua email" required
                                autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
-                    <button id="validate-btn" class="btn">Verifica e Gioca</button>
+                    <button type="submit" id="validate-btn" class="btn">Verifica e Gioca</button>
                     <div id="error-message" class="error-message" aria-live="polite"></div>
                     <div id="login-info" class="info-message" aria-live="polite"></div>
-                </div>
+                </form>
             </div>
         </section>
 

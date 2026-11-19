@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
+  const loginForm = document.getElementById("login-form");
   const validateBtn = document.getElementById("validate-btn");
   const vatNumberInput = document.getElementById("vat-number");
   const playerNameSpan = document.getElementById("player-name");
@@ -47,14 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
   preload(["images/tree-opened.svg", "images/prize-card.svg"]);
 
   // Event listeners
-  validateBtn.addEventListener("click", validateVatNumber);
-  [vatNumberInput, playerEmailInput].forEach((input) =>
-    input.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        validateVatNumber();
-      }
-    })
-  );
+  // Native submit: handles the Enter key and doesn't fire during IME composition
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    validateVatNumber();
+  });
 
   function preload(urls) {
     urls.forEach((url) => {
@@ -131,12 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Email validation
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    // The form uses novalidate: show our message and move focus to the first invalid field
     if (!vatNumber || !playerEmail) {
       showError("Inserisci sia la Partita IVA che la tua Email.");
+      (vatNumber ? playerEmailInput : vatNumberInput).focus();
       return;
     }
     if (!emailPattern.test(playerEmail)) {
       showError("Inserisci un'email valida.");
+      playerEmailInput.focus();
       return;
     }
 
