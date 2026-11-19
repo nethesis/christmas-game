@@ -14,4 +14,6 @@ echo "🧹 Removing active players data"
 find data/active_players -name '*.json' -delete
 
 echo "🎁 Restoring data/prizes.jsonl from $SRC"
+rm -f data/prizes.jsonl   # may be owned by the web server user
 cp "$SRC" data/prizes.jsonl
+chmod 666 data/prizes.jsonl
