@@ -38,16 +38,16 @@ function sendWinnerEmail(?string $email, string $name, string $prize): void
 
     $mail = createMailer();
     $mail->addAddress($email);
-    $mail->Subject = 'Congratulazioni! Hai vinto un regalo di Pasqua!';
+    $mail->Subject = 'Congratulazioni! Hai vinto un regalo di Natale!';
     $mail->Body = <<<HTML
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-          <h1 style="color: #6200ea; text-align: center;">Buona Pasqua, {$name}!</h1>
-          <p style="font-size: 16px; line-height: 1.5;">Congratulazioni! Hai appena vinto un fantastico regalo nel nostro gioco di Pasqua:</p>
+          <h1 style="color: #c62828; text-align: center;">Buon Natale, {$name}!</h1>
+          <p style="font-size: 16px; line-height: 1.5;">Congratulazioni! Hai appena vinto un fantastico regalo nel nostro gioco di Natale:</p>
           <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; text-align: center; margin: 20px 0;">
-            <h2 style="color: #e91e63; margin: 0;">{$prize}</h2>
+            <h2 style="color: #2e7d32; margin: 0;">{$prize}</h2>
           </div>
           <p style="font-size: 16px; line-height: 1.5;">Il nostro team commerciale ti contatterà presto con i dettagli su come riscattare il tuo regalo.</p>
-          <p style="font-size: 16px; line-height: 1.5;">Grazie per aver partecipato al nostro gioco e Buona Pasqua!</p>
+          <p style="font-size: 16px; line-height: 1.5;">Grazie per aver partecipato al nostro gioco e Buone Feste!</p>
           <div style="text-align: center; margin-top: 30px; color: #757575; font-size: 14px;">
             <p>Questa è un'email automatica, si prega di non rispondere.</p>
           </div>
@@ -68,8 +68,8 @@ function sendCommercialEmail(string $vatNumber, string $playerName, string $priz
     $mail->Subject = $subject;
     $mail->Body = <<<HTML
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-          <h1 style="color: #3f51b5; text-align: center;">Nuovo vincitore del gioco di Pasqua</h1>
-          <p style="font-size: 16px; line-height: 1.5;">Un nuovo cliente ha partecipato al gioco di Pasqua e ha vinto un regalo:</p>
+          <h1 style="color: #c62828; text-align: center;">Nuovo vincitore del gioco di Natale</h1>
+          <p style="font-size: 16px; line-height: 1.5;">Un nuovo cliente ha partecipato al gioco di Natale e ha vinto un regalo:</p>
           <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
             <tr>
               <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f5f5f5;">Cliente</th>

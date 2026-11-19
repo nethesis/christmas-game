@@ -1,10 +1,10 @@
 #!/bin/bash
 # Reset the game: remove active players and restore prizes.jsonl from the given file
-# Usage: bin/clean_data.sh [path/to/prizes.jsonl]   (default: ./prizes.jsonl)
+# Usage: bin/clean_data.sh [path/to/prizes.jsonl]   (default: samples/prizes.jsonl)
 set -e
 cd "$(dirname "$0")/.."
 
-SRC="${1:-prizes.jsonl}"
+SRC="${1:-samples/prizes.jsonl}"
 if [ ! -f "$SRC" ]; then
     echo "⚠️  Error: $SRC not found."
     exit 1

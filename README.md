@@ -1,6 +1,6 @@
 # xmas-game
 
-Gioco per i partner Nethesis per vincere un regalo esclusivo.
+Gioco di Natale per i partner Nethesis: scegli un pacco e vinci un regalo esclusivo.
 Porting in PHP (Apache) di `easter-game` (Node.js/Express).
 
 ## Requisiti
@@ -59,5 +59,25 @@ sudo chown -R www-data: data
 
 ## Script
 
-- `bin/clean_data.sh [prizes.jsonl]` — azzera le giocate e ripristina `data/prizes.jsonl`
+- `bin/clean_data.sh [prizes.jsonl]` (default `samples/prizes.jsonl`) — azzera le giocate e ripristina `data/prizes.jsonl`
 - `bin/get_file.sh [piva]` — mostra l'esito della giocata di un partner
+
+## Immagini
+
+Da inserire in `public/images/` (non incluse nel repo):
+
+| File | Uso |
+|------|-----|
+| `gift_closed.svg` | Pacco chiuso nella griglia di gioco (24 pacchi, box ~100×130 px) |
+| `gift_opened.svg` | Pacco aperto: dopo il click e nella schermata del premio (200 px di larghezza) |
+
+Per usare un altro formato (es. PNG) aggiornare i percorsi in `public/js/game.js` e `public/index.html`.
+
+## Dati di prova
+
+In `samples/` ci sono 10 partner fittizi (P.IVA da `00000000001` a `00000000010`) e 5 premi:
+
+```bash
+cp samples/*.jsonl data/        # carica i dati di prova
+bin/clean_data.sh               # azzera giocate e premi (usa samples/prizes.jsonl)
+```

@@ -9,18 +9,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   const resultSection = document.getElementById("result-section");
   const errorMessage = document.getElementById("error-message");
   const prizeNameSpan = document.getElementById("prize-name");
-  const eggsContainer = document.getElementById("eggs-container");
+  const giftsContainer = document.getElementById("gifts-container");
   const title = document.getElementById("title");
 
   // Variables
   let currentVatNumber = "";
   let currentPlayerName = "";
-  let eggs = [];
+  let gifts = [];
 
   // Load prizes from JSON file
   try {
-    // Generate eggs
-    generateEggs();
+    // Generate gifts
+    generateGifts();
   } catch (error) {
     console.error("Failed to load prizes:", error);
   }
@@ -51,35 +51,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  function generateEggs() {
-    // Clear existing eggs
-    eggsContainer.innerHTML = "";
+  function generateGifts() {
+    // Clear existing gifts
+    giftsContainer.innerHTML = "";
 
-    // Generate 24 eggs (6x4 layout)
-    const maxEggs = 24;
+    // Generate 24 gifts (6x4 layout)
+    const maxGifts = 24;
 
-    for (let i = 0; i < maxEggs; i++) {
-      const eggDiv = document.createElement("div");
-      eggDiv.className = "egg";
-      eggDiv.setAttribute("data-egg-id", `egg-${i + 1}`);
+    for (let i = 0; i < maxGifts; i++) {
+      const giftDiv = document.createElement("div");
+      giftDiv.className = "gift";
+      giftDiv.setAttribute("data-gift-id", `gift-${i + 1}`);
 
-      const eggImg = document.createElement("img");
-      eggImg.src = "images/egg_closed.svg";
-      eggImg.alt = "Uovo di Pasqua";
+      const giftImg = document.createElement("img");
+      giftImg.src = "images/gift_closed.svg";
+      giftImg.alt = "Pacco regalo";
 
-      eggDiv.appendChild(eggImg);
-      eggsContainer.appendChild(eggDiv);
+      giftDiv.appendChild(giftImg);
+      giftsContainer.appendChild(giftDiv);
 
       // Add click event
-      eggDiv.addEventListener("click", async function () {
+      giftDiv.addEventListener("click", async function () {
         if (!playerEmailInput.value.trim()) {
-          alert("Inserisci la tua email prima di scegliere un uovo");
+          alert("Inserisci la tua email prima di scegliere un regalo");
           playerEmailInput.focus();
           return;
         }
 
         try {
-          eggDiv.classList.add("shaking");
+          giftDiv.classList.add("shaking");
 
           // Send record-game request
           const recordGameResponse = await fetch("api/record-prize", {
@@ -94,8 +94,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             }),
           });
 
-          eggDiv.classList.remove("shaking");
-          eggImg.src = "images/egg_opened.svg";
+          giftDiv.classList.remove("shaking");
+          giftImg.src = "images/gift_opened.svg";
 
           if (!recordGameResponse.ok) {
             throw new Error("Errore nella registrazione del gioco");
@@ -103,18 +103,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const { prize } = await recordGameResponse.json();
 
-          // Handle the egg selection UI
-          await selectEgg(eggDiv, prize);
+          // Handle the gift selection UI
+          await selectGift(giftDiv, prize);
         } catch (error) {
           console.error("Errore nella richiesta del regalo:", error);
           showError("Si è verificato un errore. Riprova più tardi.");
-          eggImg.src = "images/egg_closed.svg";
+          giftImg.src = "images/gift_closed.svg";
         }
       });
     }
 
-    // Update eggs variable
-    eggs = document.querySelectorAll(".egg");
+    // Update gifts variable
+    gifts = document.querySelectorAll(".gift");
   }
 
   async function validateVatNumber() {
@@ -167,18 +167,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  async function selectEgg(eggElement, prize) {
+  async function selectGift(giftElement, prize) {
     // Visual feedback on selection
-    eggs.forEach((egg) => {
-      egg.style.opacity = "0.5";
-      egg.style.pointerEvents = "none";
+    gifts.forEach((gift) => {
+      gift.style.opacity = "0.5";
+      gift.style.pointerEvents = "none";
     });
 
-    eggElement.style.opacity = "1";
+    giftElement.style.opacity = "1";
 
     // Show animation (you can enhance this)
-    eggElement.style.transform = "scale(1.2)";
-    eggElement.classList.add("opening");
+    giftElement.style.transform = "scale(1.2)";
+    giftElement.classList.add("opening");
 
     setTimeout(async () => {
       // Update UI for result immediately

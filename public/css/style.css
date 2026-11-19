@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #00a2de;
-    --secondary-color: #ff5722;
+    --primary-color: #c62828;
+    --secondary-color: #2e7d32;
     --error-color: #f44336;
     --text-color: #333333;
     --light-bg: #f5f5f5;
@@ -118,21 +118,21 @@ input[type="email"]:focus {
     margin-bottom: 30px;
 }
 
-.eggs-container {
+.gifts-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr); /* 5 columns */
     grid-template-rows: repeat(4, auto);  /* 5 rows */
-    gap: 0px 10px; /* Reduce gap between eggs */
+    gap: 0px 10px; /* Reduce gap between gifts */
     margin: 30px auto;
     max-width: 800px;
     justify-content: center;
 }
 
-.egg {
+.gift {
     position: relative;
-    width: 100px; /* Increase egg width */
-    height: 130px; /* Increase egg height */
-    cursor: url('../images/hammer.png'), auto;
+    width: 100px; /* Increase gift width */
+    height: 130px; /* Increase gift height */
+    cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -140,12 +140,12 @@ input[type="email"]:focus {
     margin: 0 auto;         /* Center within the grid cell */
 }
 
-.egg.selected {
-    box-shadow: 0 0 20px #00a2de;
+.gift.selected {
+    box-shadow: 0 0 20px #f9a825;
     z-index: 2;
 }
 
-.egg.shaking {
+.gift.shaking {
     animation: shake 0.25s linear infinite;
 }
 
@@ -156,21 +156,21 @@ input[type="email"]:focus {
     100% { transform: rotate(0deg); }
 }
 
-.egg img {
+.gift img {
     max-width: 100%;
     max-height: 100%;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.egg:hover img {
+.gift:hover img {
     transform: scale(1.05);
 }
 
-.egg:active img {
+.gift:active img {
     transform: scale(0.95);
 }
 
-.egg.opening img {
+.gift.opening img {
     opacity: 0.8; /* Optional: Add a slight fade effect during transition */
 }
 
@@ -234,7 +234,7 @@ footer {
 
 /* Top Banner */
 .top-banner {
-    background-color: #00a2de; /* Azzurro */
+    background-color: #00a2de; /* Azzurro aziendale */
     width: 100%;
     padding: 15px 0px 10px 0px;
     text-align: center;
@@ -247,14 +247,14 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .eggs-container {
+    .gifts-container {
         grid-template-columns: repeat(4, 1fr); /* Adjust to 4 columns */
         gap: 10px;
     }
     
-    .egg {
-        width: 80px; /* Reduce egg width */
-        height: 110px; /* Reduce egg height */
+    .gift {
+        width: 80px; /* Reduce gift width */
+        height: 110px; /* Reduce gift height */
     }
     
     .title h1 {
@@ -263,14 +263,14 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .eggs-container {
+    .gifts-container {
         grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
         gap: 8px;
     }
     
-    .egg {
-        width: 70px; /* Further reduce egg width */
-        height: 100px; /* Further reduce egg height */
+    .gift {
+        width: 70px; /* Further reduce gift width */
+        height: 100px; /* Further reduce gift height */
     }
     
     section {

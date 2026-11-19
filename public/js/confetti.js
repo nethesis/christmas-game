@@ -9,7 +9,7 @@ class ConfettiGenerator {
             animate: true,
             respawn: true,
             props: ['circle', 'square', 'triangle', 'line'],
-            colors: [[165,104,246], [230,61,135], [0,199,228], [253,214,126]],
+            colors: [[198,40,40], [46,125,50], [249,168,37], [236,239,241]],
             clock: 25,
             interval: null,
             rotate: false,
