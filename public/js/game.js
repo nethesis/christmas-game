@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameError = document.getElementById("game-error");
   const prizeNameSpan = document.getElementById("prize-name");
   const scene = document.getElementById("scene");
-  const title = document.getElementById("title");
 
   // Visible area of the 1440x1050 tree images (the rest is empty background)
   const CROP = { x: 230, y: 130, w: 1000, h: 900 };
@@ -158,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMessage.textContent = "";
 
       // Show game section
-      title.classList.add("hidden-section");
       showSection(gameSection);
     } catch (error) {
       console.error("Error:", error);

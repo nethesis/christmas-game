@@ -20,9 +20,31 @@ body {
     background-color: var(--page-bg);
 }
 
+/* Full-height layout: banner on top, sections fill the remaining space */
+.container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Login: title + form centered in the space below the banner.
+   margin: auto (not align-items) so that, when there isn't enough room,
+   the box stays below the banner and the page scrolls instead of clipping. */
+#login-section.active-section {
+    flex: 1;
+    display: flex;
+}
+
+.login-box {
+    margin: auto;
+    width: 100%;
+    max-width: 500px;
+}
+
 .title {
     text-align: center;
-    padding-top: 20px;
+    margin-bottom: 20px;
 }
 
 .title h1 {
