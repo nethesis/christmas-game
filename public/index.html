@@ -36,14 +36,16 @@
         </section>
 
         <section id="game-section" class="hidden-section">
-            <h2>Benvenuto, <span id="player-name">Giocatore</span>!</h2>
-            <p>Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
-            <div class="scene" id="scene">
-                <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img">
-                <img src="images/tree-opened.svg" alt="Pacco regalo aperto. Auguri da Nethesis!" class="scene-img scene-opened">
-                <!-- Clickable gift areas are inserted here by game.js -->
+            <div class="game-box">
+                <h2>Benvenuto, <span id="player-name">Giocatore</span>!</h2>
+                <p>Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
+                <div class="scene" id="scene">
+                    <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img">
+                    <img src="images/tree-opened.svg" alt="Pacco regalo aperto. Auguri da Nethesis!" class="scene-img scene-opened">
+                    <!-- Clickable gift areas are inserted here by game.js -->
+                </div>
+                <div id="game-error" class="error-message"></div>
             </div>
-            <div id="game-error" class="error-message"></div>
         </section>
 
         <section id="result-section" class="hidden-section">

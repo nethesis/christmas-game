@@ -28,17 +28,22 @@ body {
     flex-direction: column;
 }
 
-/* Login: title + form centered in the space below the banner.
+/* Every screen fills the space below the banner and centers its box.
    margin: auto (not align-items) so that, when there isn't enough room,
    the box stays below the banner and the page scrolls instead of clipping. */
-#login-section.active-section {
+section.active-section {
     flex: 1;
     display: flex;
 }
 
-.login-box {
+.login-box,
+.game-box,
+.result-container {
     margin: auto;
     width: 100%;
+}
+
+.login-box {
     max-width: 500px;
 }
 
@@ -197,14 +202,12 @@ input[type="email"]:focus {
 /* Result Section */
 #result-section {
     background: url('../images/confetti-bg.svg') center / cover no-repeat;
-    min-height: calc(100vh - 80px);
 }
 
 .result-container {
     text-align: center;
     padding: 0px 20px;
     max-width: 640px;
-    margin: 0 auto;
 }
 
 .result-container h2 {
