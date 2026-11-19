@@ -170,7 +170,7 @@ input[type="email"]:focus {
     height: auto;
     pointer-events: none;
     user-select: none;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.5s ease;
 }
 
 .scene-opened {
@@ -215,10 +215,6 @@ input[type="email"]:focus {
 }
 
 /* Result Section */
-#result-section {
-    background: url('../images/confetti-bg.svg') center / cover no-repeat;
-}
-
 .result-container {
     text-align: center;
     padding: 0px 20px;
@@ -289,8 +285,8 @@ footer {
     right: 0;
 }
 
-/* Confetti */
-#confetti-container {
+/* Snowfall */
+#snow-container {
     position: fixed;
     top: 0;
     left: 0;

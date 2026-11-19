@@ -70,7 +70,6 @@ In `public/images/` (esportate da Figma):
 |------|-----|
 | `tree.svg` | Scena di gioco: albero con 10 pacchi cliccabili |
 | `tree-opened.svg` | Scena dopo il click: pacco aperto e "Auguri da Nethesis!" |
-| `confetti-bg.svg` | Sfondo della schermata del premio |
 | `prize-card.svg` | Card del premio; il nome va nella fascia bianca in basso |
 
 Le aree cliccabili dei pacchi sono definite in `public/js/game.js` (`GIFTS`) in coordinate

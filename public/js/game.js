@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Pauses between one screen and the next
   const LOGIN_DELAY_MS = 3000; // login accepted -> tree
-  const PRIZE_DELAY_MS = 5000; // opened gift fully visible -> prize card
-  const SCENE_FADE_MS = 800; // keep in sync with .scene-img transition in style.css
+  const PRIZE_DELAY_MS = 3500; // opened gift fully visible -> prize card
+  const SCENE_FADE_MS = 500; // keep in sync with .scene-img transition in style.css
+  const SNOW_DURATION_MS = 30000; // snowfall on the prize screen
 
   // Visible area of the 1440x1050 tree images (the rest is empty background)
   const CROP = { x: 230, y: 130, w: 1000, h: 900 };
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let validating = false;
 
   setupScene();
-  preload(["images/tree-opened.svg", "images/prize-card.svg", "images/confetti-bg.svg"]);
+  preload(["images/tree-opened.svg", "images/prize-card.svg"]);
 
   // Event listeners
   validateBtn.addEventListener("click", validateVatNumber);
@@ -195,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       showSection(resultSection);
-      startConfetti();
+      startSnow();
     }, SCENE_FADE_MS + PRIZE_DELAY_MS);
   }
 
@@ -211,17 +212,13 @@ document.addEventListener("DOMContentLoaded", () => {
     errorMessage.style.opacity = "1";
   }
 
-  function startConfetti() {
-    const confetti = new ConfettiGenerator({
-      target: "confetti-container",
-      max: 150,
-      size: 1.5,
-    });
-    confetti.render();
+  function startSnow() {
+    const snow = new Snowfall("snow-container");
+    snow.start();
 
-    // Stop confetti after 5 seconds
+    // Stop new flakes after SNOW_DURATION_MS; the ones on screen finish falling
     setTimeout(() => {
-      confetti.clear();
-    }, 5000);
+      snow.stop();
+    }, SNOW_DURATION_MS);
   }
 });
