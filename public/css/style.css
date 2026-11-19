@@ -1,10 +1,12 @@
 :root {
-    --primary-color: #00a2de;
-    --secondary-color: #0080b3;
-    --error-color: #f44336;
+    /* Darker shades of the corporate blue for text, for WCAG contrast */
+    --brand-color: #00a2de;     /* corporate blue: banner and login button */
+    --primary-color: #0077a8;   /* 5.0:1 on white, 4.6:1 on the page background */
+    --secondary-color: #005e85; /* 7.1:1 on white */
+    --error-color: #d32f2f;     /* 4.6:1 on the page background */
     --text-color: #333333;
     --light-bg: #f5f5f5;
-    --border-color: #e0e0e0;
+    --border-color: #6b8794;    /* input borders: 3.8:1 on white (non-text minimum 3:1) */
     --page-bg: #eef8fc;
 }
 
@@ -115,12 +117,12 @@ input[type="email"]:focus {
 
 input[type="text"]:focus-visible,
 input[type="email"]:focus-visible {
-    outline: 3px solid var(--secondary-color); /* 4.1:1 on the page background, 4.4:1 on white */
+    outline: 3px solid var(--secondary-color);
     outline-offset: 2px;
 }
 
 .btn {
-    background-color: var(--primary-color);
+    background-color: var(--brand-color);
     color: white;
     border: none;
     padding: 12px 25px;
@@ -325,7 +327,7 @@ footer {
 
 /* Top Banner */
 .top-banner {
-    background-color: #00a2de; /* Azzurro aziendale */
+    background-color: var(--brand-color);
     width: 100%;
     padding: 15px 0px 10px 0px;
     text-align: center;
