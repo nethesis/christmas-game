@@ -1,6 +1,6 @@
 :root {
     /* Darker shades of the corporate blue for text, for WCAG contrast */
-    --brand-color: #00a2de;     /* corporate blue: banner and login button */
+    --brand-color: #009edb;     /* corporate blue (Nebula Text/Link/Nethesis): banner and login button */
     --primary-color: #0077a8;   /* 5.0:1 on white, 4.6:1 on the page background */
     --secondary-color: #005e85; /* 7.1:1 on white */
     --error-color: #d32f2f;     /* 4.6:1 on the page background */
@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     background-color: var(--page-bg);
 }
@@ -64,6 +64,10 @@ section.active-section {
 .title {
     text-align: center;
     margin-bottom: 20px;
+}
+
+h1 {
+    font-weight: 500;
 }
 
 .title h1 {
@@ -122,6 +126,7 @@ input[type="email"]:focus-visible {
 }
 
 .btn {
+    font-family: inherit; /* buttons don't inherit the page font by default */
     background-color: var(--brand-color);
     color: white;
     border: none;
@@ -292,7 +297,7 @@ input[type="email"]:focus-visible {
 .prize-name {
     color: var(--primary-color);
     font-size: clamp(16px, 5.2cqw, 34px);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.15;
 }
 

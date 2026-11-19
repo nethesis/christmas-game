@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       revealPrize(prize);
     } catch (error) {
       console.error("Errore nella richiesta del regalo:", error);
-      gameError.textContent = "Si è verificato un errore. Riprova più tardi.";
+      gameError.textContent = "Impossibile aprire il pacco. Riprova.";
       scene.classList.remove("busy");
       playing = false;
     } finally {
@@ -135,13 +135,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Email validation
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     // The form uses novalidate: show our message and move focus to the first invalid field
-    if (!vatNumber || !playerEmail) {
-      showError("Inserisci sia la Partita IVA che la tua Email.");
-      (vatNumber ? playerEmailInput : vatNumberInput).focus();
+    if (!vatNumber) {
+      showError("Inserisci la partita IVA");
+      vatNumberInput.focus();
+      return;
+    }
+    if (!playerEmail) {
+      showError("Inserisci l'indirizzo email");
+      playerEmailInput.focus();
       return;
     }
     if (!emailPattern.test(playerEmail)) {
-      showError("Inserisci un'email valida.");
+      showError("Inserisci un indirizzo email valido");
       playerEmailInput.focus();
       return;
     }
@@ -160,10 +165,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         showError(
           data.error === "VAT Number not authorized to play"
-            ? "Errore! Partita Iva inesistente"
+            ? "Questa partita IVA non può partecipare"
             : data.error === "You have already played with this VAT Number"
-            ? "Errore! Partita Iva già utilizzata"
-            : "Errore nella verifica della Partita IVA"
+            ? "Questa partita IVA ha già partecipato"
+            : "Impossibile verificare la partita IVA"
         );
         setLoginBusy(false);
         return;
@@ -182,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => showSection(gameSection, gameTitle, "Scegli il tuo regalo"), LOGIN_DELAY_MS);
     } catch (error) {
       console.error("Error:", error);
-      showError("Si è verificato un errore di connessione. Riprova più tardi.");
+      showError("Errore di rete. Controlla la connessione e riprova.");
       setLoginBusy(false);
     }
   }

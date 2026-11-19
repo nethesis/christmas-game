@@ -14,11 +14,11 @@ function asset(string $path): string
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scarta il Regalo</title>
+    <title>Scarta il regalo</title>
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -31,21 +31,21 @@ function asset(string $path): string
         <section id="login-section" class="active-section">
             <div class="login-box">
                 <div class="title">
-                    <h1 id="login-title">Scarta il Regalo</h1>
+                    <h1 id="login-title">Scarta il regalo</h1>
                 </div>
 
                 <form id="login-form" class="form-container" method="post" novalidate>
                     <div class="form-group">
-                        <label for="vat-number">Partita IVA:</label>
-                        <input type="text" id="vat-number" name="vatNumber" placeholder="Inserisci la tua Partita IVA" required autofocus aria-describedby="login-title"
+                        <label for="vat-number">Partita IVA</label>
+                        <input type="text" id="vat-number" name="vatNumber" placeholder="es. 01234567890" required autofocus aria-describedby="login-title"
                                autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
                     <div class="form-group">
-                        <label for="player-email">La tua Email:</label>
-                        <input type="email" id="player-email" name="playerEmail" placeholder="La tua email" required
+                        <label for="player-email">Email</label>
+                        <input type="email" id="player-email" name="playerEmail" placeholder="es. nome@azienda.it" required
                                autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
                     </div>
-                    <button type="submit" id="validate-btn" class="btn">Verifica e Gioca</button>
+                    <button type="submit" id="validate-btn" class="btn">Verifica e gioca</button>
                     <div id="error-message" class="error-message" aria-live="polite"></div>
                     <div id="login-info" class="info-message" aria-live="polite"></div>
                 </form>
@@ -77,7 +77,7 @@ function asset(string $path): string
                 </div>
                 <p>Abbiamo inviato i dettagli alla tua email. Il nostro team ti contatterà presto!</p>
                 <div class="thank-you">
-                    <p>Grazie per aver partecipato al nostro gioco di Natale! Buone Feste!</p>
+                    <p>Grazie per aver partecipato al nostro gioco di Natale! Buone feste!</p>
                 </div>
             </div>
         </section>
