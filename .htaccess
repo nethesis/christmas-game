@@ -1,0 +1,6 @@
+# DocumentRoot should point to public/. If it doesn't, block everything else.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(src|data|vendor|bin)(/|$) - [F,L]
+    RewriteRule ^(\.env|composer\.(json|lock))$ - [F,L]
+</IfModule>

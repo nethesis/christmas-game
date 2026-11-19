@@ -1,0 +1,7 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^api/(validate-vat|record-prize)/?$ api.php?action=$1 [L,QSA]
+</IfModule>

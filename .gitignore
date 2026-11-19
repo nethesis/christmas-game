@@ -1,0 +1,8 @@
+vendor/
+.env
+data/*
+!data/.htaccess
+!data/active_players/
+data/active_players/*
+!data/active_players/.gitkeep
+prizes.jsonl

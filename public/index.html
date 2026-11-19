@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking Eggs</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="top-banner">
+            <img src="images/nethesis.svg" alt="Nethesis Logo" class="logo">
+        </div>
+
+        <div id="title" class="title">
+            <h1>Breaking Eggs</h1>
+        </div>
+
+        <section id="login-section" class="active-section">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="vat-number">Partita IVA:</label>
+                    <input type="text" id="vat-number" placeholder="Inserisci la tua Partita IVA" required>
+                </div>
+                <div class="form-group">
+                    <label for="player-email">La tua Email:</label>
+                    <input type="email" id="player-email" placeholder="La tua email" required>
+                </div>
+                <button id="validate-btn" class="btn">Verifica e Gioca</button>
+                <div id="error-message" class="error-message"></div>
+            </div>
+        </section>
+
+        <section id="game-section" class="hidden-section">
+            <h2>Benvenuto, <span id="player-name">Giocatore</span>!</h2>
+            <p>Clicca su un uovo per scoprire il tuo regalo</p>
+            <div class="eggs-container" id="eggs-container">
+                <!-- Eggs will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <section id="result-section" class="hidden-section">
+            <div class="result-container">
+                <h2>Ecco il tuo regalo!</h2>
+                <div class="prize-reveal">
+                    <img src="images/egg_opened.svg" alt="Regalo" class="prize-image">
+                    <h3>Hai vinto: <span id="prize-name">Un regalo</span></h3>
+                </div>
+                <p>Abbiamo inviato i dettagli alla tua email. Il nostro team ti contatterà presto!</p>
+                <div class="thank-you">
+                    <p>Grazie per aver partecipato al nostro gioco di Pasqua!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="confetti-container"></div>
+
+    <script src="js/confetti.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

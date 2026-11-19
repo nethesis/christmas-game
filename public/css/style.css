@@ -1,0 +1,296 @@
+:root {
+    --primary-color: #00a2de;
+    --secondary-color: #ff5722;
+    --error-color: #f44336;
+    --text-color: #333333;
+    --light-bg: #f5f5f5;
+    --border-color: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
+
+.title {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.title h1 {
+    color: var(--text-color);
+    font-size: 2.5em;
+}
+
+section {
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.active-section {
+    display: block;
+}
+
+.hidden-section {
+    display: none;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.error-message {
+    color: var(--error-color);
+    margin-top: 15px;
+    text-align: center;
+    min-height: 24px;
+}
+
+/* Game Section */
+#game-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+#game-section p {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.game-info {
+    margin-bottom: 30px;
+}
+
+.eggs-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 5 columns */
+    grid-template-rows: repeat(4, auto);  /* 5 rows */
+    gap: 0px 10px; /* Reduce gap between eggs */
+    margin: 30px auto;
+    max-width: 800px;
+    justify-content: center;
+}
+
+.egg {
+    position: relative;
+    width: 100px; /* Increase egg width */
+    height: 130px; /* Increase egg height */
+    cursor: url('../images/hammer.png'), auto;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+    margin: 0 auto;         /* Center within the grid cell */
+}
+
+.egg.selected {
+    box-shadow: 0 0 20px #00a2de;
+    z-index: 2;
+}
+
+.egg.shaking {
+    animation: shake 0.25s linear infinite;
+}
+
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.egg img {
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.egg:hover img {
+    transform: scale(1.05);
+}
+
+.egg:active img {
+    transform: scale(0.95);
+}
+
+.egg.opening img {
+    opacity: 0.8; /* Optional: Add a slight fade effect during transition */
+}
+
+/* Result Section */
+.result-container {
+    text-align: center;
+    padding: 0px 20px;
+}
+
+.result-container h2 {
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.prize-reveal {
+    background-color: var(--light-bg);
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prize-image {
+    width: 200px;
+}
+
+.prize-reveal h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+}
+
+.thank-you {
+    font-style: italic;
+    color: #666;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    color: #666;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Confetti */
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Top Banner */
+.top-banner {
+    background-color: #00a2de; /* Azzurro */
+    width: 100%;
+    padding: 15px 0px 10px 0px;
+    text-align: center;
+}
+
+.top-banner .logo {
+    max-width: 250px;
+    height: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .eggs-container {
+        grid-template-columns: repeat(4, 1fr); /* Adjust to 4 columns */
+        gap: 10px;
+    }
+    
+    .egg {
+        width: 80px; /* Reduce egg width */
+        height: 110px; /* Reduce egg height */
+    }
+    
+    .title h1 {
+        font-size: 2em; /* Adjust title size */
+    }
+}
+
+@media (max-width: 480px) {
+    .eggs-container {
+        grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
+        gap: 8px;
+    }
+    
+    .egg {
+        width: 70px; /* Further reduce egg width */
+        height: 100px; /* Further reduce egg height */
+    }
+    
+    section {
+        padding: 15px;
+    }
+    
+    .title h1 {
+        font-size: 1.5em; /* Further adjust title size */
+    }
+    
+    .form-container {
+        padding: 10px;
+    }
+    
+    input[type="text"],
+    input[type="email"] {
+        font-size: 0.9em; /* Adjust input font size */
+    }
+    
+    .btn {
+        font-size: 0.9em; /* Adjust button font size */
+    }
+}
