@@ -91,14 +91,20 @@ input[type="email"] {
     padding: 12px 15px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    font-size: 1em;
+    font: inherit;
+    font-size: max(1rem, 1em); /* never below 16px: smaller makes iOS zoom in on focus */
     transition: border-color 0.3s;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus {
     border-color: var(--primary-color);
-    outline: none;
+}
+
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .btn {
@@ -329,11 +335,6 @@ footer {
     
     .form-container {
         padding: 10px;
-    }
-    
-    input[type="text"],
-    input[type="email"] {
-        font-size: 0.9em; /* Adjust input font size */
     }
     
     .btn {

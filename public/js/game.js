@@ -208,8 +208,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showError(message) {
-    errorMessage.textContent = message;
+    // Clear first, so screen readers announce the message again even if it's unchanged
+    errorMessage.textContent = "";
     errorMessage.style.opacity = "1";
+    setTimeout(() => {
+      errorMessage.textContent = message;
+    }, 100);
   }
 
   function startSnow() {
