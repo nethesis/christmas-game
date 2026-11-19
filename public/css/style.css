@@ -1,10 +1,11 @@
 :root {
-    --primary-color: #c62828;
-    --secondary-color: #2e7d32;
+    --primary-color: #00a2de;
+    --secondary-color: #0080b3;
     --error-color: #f44336;
     --text-color: #333333;
     --light-bg: #f5f5f5;
     --border-color: #e0e0e0;
+    --page-bg: #eef8fc;
 }
 
 * {
@@ -16,6 +17,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
+    background-color: var(--page-bg);
 }
 
 .title {
@@ -110,97 +112,123 @@ input[type="email"]:focus {
 
 #game-section p {
     text-align: center;
-    margin-bottom: 30px;
     font-size: 1.1em;
 }
 
-.game-info {
-    margin-bottom: 30px;
+.scene {
+    position: relative;
+    max-width: 760px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
-.gifts-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 5 columns */
-    grid-template-rows: repeat(4, auto);  /* 5 rows */
-    gap: 0px 10px; /* Reduce gap between gifts */
-    margin: 30px auto;
-    max-width: 800px;
-    justify-content: center;
+.scene-img {
+    position: absolute;
+    max-width: none;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.8s ease;
+}
+
+.scene-opened {
+    opacity: 0;
+}
+
+.scene.opened .scene-opened {
+    opacity: 1;
 }
 
 .gift {
-    position: relative;
-    width: 100px; /* Increase gift width */
-    height: 130px; /* Increase gift height */
+    position: absolute;
+    border: none;
+    border-radius: 30%;
+    background: transparent;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;    /* Center vertically */
-    margin: 0 auto;         /* Center within the grid cell */
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.gift.selected {
-    box-shadow: 0 0 20px #f9a825;
-    z-index: 2;
+.gift:hover,
+.gift:focus-visible {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+    outline: none;
+}
+
+.scene.busy .gift {
+    pointer-events: none;
+}
+
+.scene.opened .gift {
+    display: none;
 }
 
 .gift.shaking {
-    animation: shake 0.25s linear infinite;
+    background: radial-gradient(circle, rgba(249, 168, 37, 0.6) 0%, rgba(249, 168, 37, 0) 70%);
+    animation: pulse 0.6s ease-in-out infinite;
 }
 
-@keyframes shake {
-    0% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
-}
-
-.gift img {
-    max-width: 100%;
-    max-height: 100%;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.gift:hover img {
-    transform: scale(1.05);
-}
-
-.gift:active img {
-    transform: scale(0.95);
-}
-
-.gift.opening img {
-    opacity: 0.8; /* Optional: Add a slight fade effect during transition */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 /* Result Section */
+#result-section {
+    background: url('../images/confetti-bg.svg') center / cover no-repeat;
+    min-height: calc(100vh - 80px);
+}
+
 .result-container {
     text-align: center;
     padding: 0px 20px;
+    max-width: 640px;
+    margin: 0 auto;
 }
 
 .result-container h2 {
     color: var(--primary-color);
     font-size: 2em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.prize-reveal {
-    background-color: var(--light-bg);
-    padding: 30px;
-    border-radius: 10px;
-    margin: 20px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.prize-card {
+    position: relative;
+    container-type: inline-size;
+    margin: 0 auto 10px;
 }
 
-.prize-image {
-    width: 200px;
+.prize-card-img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
-.prize-reveal h3 {
+/* White area of prize-card.svg (935x659): x 36-898, y 462-622 */
+.prize-card-text {
+    position: absolute;
+    left: 3.85%;
+    right: 3.85%;
+    top: 70.1%;
+    height: 24.3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.prize-label {
+    color: #666;
+    font-size: max(11px, 2.6cqw);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.prize-name {
     color: var(--primary-color);
-    font-size: 1.5em;
+    font-size: clamp(16px, 5.2cqw, 34px);
+    font-weight: 700;
+    line-height: 1.15;
 }
 
 .thank-you {
@@ -247,15 +275,6 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .gifts-container {
-        grid-template-columns: repeat(4, 1fr); /* Adjust to 4 columns */
-        gap: 10px;
-    }
-    
-    .gift {
-        width: 80px; /* Reduce gift width */
-        height: 110px; /* Reduce gift height */
-    }
     
     .title h1 {
         font-size: 2em; /* Adjust title size */
@@ -263,15 +282,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .gifts-container {
-        grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
-        gap: 8px;
-    }
-    
-    .gift {
-        width: 70px; /* Further reduce gift width */
-        height: 100px; /* Further reduce gift height */
-    }
     
     section {
         padding: 15px;

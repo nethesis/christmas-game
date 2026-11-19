@@ -35,18 +35,24 @@
 
         <section id="game-section" class="hidden-section">
             <h2>Benvenuto, <span id="player-name">Giocatore</span>!</h2>
-            <p>Clicca su un pacco per scoprire il tuo regalo</p>
-            <div class="gifts-container" id="gifts-container">
-                <!-- Gifts will be dynamically inserted here -->
+            <p>Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
+            <div class="scene" id="scene">
+                <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img">
+                <img src="images/tree-opened.svg" alt="Pacco regalo aperto. Auguri da Nethesis!" class="scene-img scene-opened">
+                <!-- Clickable gift areas are inserted here by game.js -->
             </div>
+            <div id="game-error" class="error-message"></div>
         </section>
 
         <section id="result-section" class="hidden-section">
             <div class="result-container">
                 <h2>Ecco il tuo regalo!</h2>
-                <div class="prize-reveal">
-                    <img src="images/gift_opened.svg" alt="Regalo" class="prize-image">
-                    <h3>Hai vinto: <span id="prize-name">Un regalo</span></h3>
+                <div class="prize-card">
+                    <img src="images/prize-card.svg" alt="" class="prize-card-img">
+                    <div class="prize-card-text">
+                        <span class="prize-label">Hai vinto</span>
+                        <span id="prize-name" class="prize-name">Un regalo</span>
+                    </div>
                 </div>
                 <p>Abbiamo inviato i dettagli alla tua email. Il nostro team ti contatterà presto!</p>
                 <div class="thank-you">

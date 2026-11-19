@@ -64,14 +64,17 @@ sudo chown -R www-data: data
 
 ## Immagini
 
-Da inserire in `public/images/` (non incluse nel repo):
+In `public/images/` (esportate da Figma):
 
 | File | Uso |
 |------|-----|
-| `gift_closed.svg` | Pacco chiuso nella griglia di gioco (24 pacchi, box ~100×130 px) |
-| `gift_opened.svg` | Pacco aperto: dopo il click e nella schermata del premio (200 px di larghezza) |
+| `tree.svg` | Scena di gioco: albero con 10 pacchi cliccabili |
+| `tree-opened.svg` | Scena dopo il click: pacco aperto e "Auguri da Nethesis!" |
+| `confetti-bg.svg` | Sfondo della schermata del premio |
+| `prize-card.svg` | Card del premio; il nome va nella fascia bianca in basso |
 
-Per usare un altro formato (es. PNG) aggiornare i percorsi in `public/js/game.js` e `public/index.html`.
+Le aree cliccabili dei pacchi sono definite in `public/js/game.js` (`GIFTS`) in coordinate
+dell'immagine 1440×1050: se si cambia `tree.svg` vanno riallineate.
 
 ## Dati di prova
 

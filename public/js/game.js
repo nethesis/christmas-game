@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const validateBtn = document.getElementById("validate-btn");
   const vatNumberInput = document.getElementById("vat-number");
@@ -8,129 +8,131 @@ document.addEventListener("DOMContentLoaded", async () => {
   const gameSection = document.getElementById("game-section");
   const resultSection = document.getElementById("result-section");
   const errorMessage = document.getElementById("error-message");
+  const gameError = document.getElementById("game-error");
   const prizeNameSpan = document.getElementById("prize-name");
-  const giftsContainer = document.getElementById("gifts-container");
+  const scene = document.getElementById("scene");
   const title = document.getElementById("title");
+
+  // Visible area of the 1440x1050 tree images (the rest is empty background)
+  const CROP = { x: 230, y: 130, w: 1000, h: 900 };
+
+  // Gift boxes in tree.svg, in image coordinates [x, y, width, height].
+  // Ordered back to front, so overlapping front gifts get the click.
+  const GIFTS = [
+    [482, 606, 86, 102], // orange
+    [886, 700, 80, 90], // cyan, red bow
+    [428, 670, 94, 112], // green, red bow
+    [503, 730, 87, 92], // dark blue
+    [805, 738, 85, 107], // white, red bow
+    [576, 740, 104, 122], // big blue
+    [462, 780, 75, 80], // light blue
+    [714, 790, 89, 100], // purple
+    [552, 823, 80, 97], // red
+    [675, 864, 83, 89], // dark green
+  ];
 
   // Variables
   let currentVatNumber = "";
   let currentPlayerName = "";
-  let gifts = [];
+  let playing = false;
 
-  // Load prizes from JSON file
-  try {
-    // Generate gifts
-    generateGifts();
-  } catch (error) {
-    console.error("Failed to load prizes:", error);
-  }
+  setupScene();
+  preload(["images/tree-opened.svg", "images/prize-card.svg", "images/confetti-bg.svg"]);
 
   // Event listeners
-  validateBtn.addEventListener("click", () => {
-    const vatNumber = vatNumberInput.value.trim();
-    const playerEmail = playerEmailInput.value.trim();
+  validateBtn.addEventListener("click", validateVatNumber);
+  [vatNumberInput, playerEmailInput].forEach((input) =>
+    input.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        validateVatNumber();
+      }
+    })
+  );
 
-    // Email validation
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-    if (!vatNumber || !playerEmail) {
-      errorMessage.textContent =
-        "Inserisci sia la Partita IVA che la tua Email.";
+  function preload(urls) {
+    urls.forEach((url) => {
+      new Image().src = url;
+    });
+  }
+
+  function setupScene() {
+    // Position the images so that only the CROP area is visible
+    scene.style.aspectRatio = `${CROP.w} / ${CROP.h}`;
+    scene.querySelectorAll(".scene-img").forEach((img) => {
+      img.style.width = `${(1440 / CROP.w) * 100}%`;
+      img.style.left = `${(-CROP.x / CROP.w) * 100}%`;
+      img.style.top = `${(-CROP.y / CROP.h) * 100}%`;
+    });
+
+    GIFTS.forEach(([x, y, w, h], i) => {
+      const gift = document.createElement("button");
+      gift.type = "button";
+      gift.className = "gift";
+      gift.setAttribute("aria-label", `Pacco regalo ${i + 1}`);
+      gift.style.left = `${((x - CROP.x) / CROP.w) * 100}%`;
+      gift.style.top = `${((y - CROP.y) / CROP.h) * 100}%`;
+      gift.style.width = `${(w / CROP.w) * 100}%`;
+      gift.style.height = `${(h / CROP.h) * 100}%`;
+      gift.addEventListener("click", () => openGift(gift));
+      scene.appendChild(gift);
+    });
+  }
+
+  async function openGift(gift) {
+    if (playing) {
       return;
     }
-    if (!emailPattern.test(playerEmail)) {
-      errorMessage.textContent = "Inserisci un'email valida.";
-      return;
-    }
+    playing = true;
+    gameError.textContent = "";
+    scene.classList.add("busy");
+    gift.classList.add("shaking");
 
-    validateVatNumber();
-  });
-
-  vatNumberInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      validateVatNumber();
-    }
-  });
-
-  function generateGifts() {
-    // Clear existing gifts
-    giftsContainer.innerHTML = "";
-
-    // Generate 24 gifts (6x4 layout)
-    const maxGifts = 24;
-
-    for (let i = 0; i < maxGifts; i++) {
-      const giftDiv = document.createElement("div");
-      giftDiv.className = "gift";
-      giftDiv.setAttribute("data-gift-id", `gift-${i + 1}`);
-
-      const giftImg = document.createElement("img");
-      giftImg.src = "images/gift_closed.svg";
-      giftImg.alt = "Pacco regalo";
-
-      giftDiv.appendChild(giftImg);
-      giftsContainer.appendChild(giftDiv);
-
-      // Add click event
-      giftDiv.addEventListener("click", async function () {
-        if (!playerEmailInput.value.trim()) {
-          alert("Inserisci la tua email prima di scegliere un regalo");
-          playerEmailInput.focus();
-          return;
-        }
-
-        try {
-          giftDiv.classList.add("shaking");
-
-          // Send record-game request
-          const recordGameResponse = await fetch("api/record-prize", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              vatNumber: currentVatNumber,
-              playerName: currentPlayerName,
-              playerEmail: playerEmailInput.value.trim(),
-            }),
-          });
-
-          giftDiv.classList.remove("shaking");
-          giftImg.src = "images/gift_opened.svg";
-
-          if (!recordGameResponse.ok) {
-            throw new Error("Errore nella registrazione del gioco");
-          }
-
-          const { prize } = await recordGameResponse.json();
-
-          // Handle the gift selection UI
-          await selectGift(giftDiv, prize);
-        } catch (error) {
-          console.error("Errore nella richiesta del regalo:", error);
-          showError("Si è verificato un errore. Riprova più tardi.");
-          giftImg.src = "images/gift_closed.svg";
-        }
+    try {
+      const response = await fetch("api/record-prize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vatNumber: currentVatNumber,
+          playerName: currentPlayerName,
+          playerEmail: playerEmailInput.value.trim(),
+        }),
       });
-    }
 
-    // Update gifts variable
-    gifts = document.querySelectorAll(".gift");
+      if (!response.ok) {
+        throw new Error("Errore nella registrazione del gioco");
+      }
+
+      const { prize } = await response.json();
+      revealPrize(prize);
+    } catch (error) {
+      console.error("Errore nella richiesta del regalo:", error);
+      gameError.textContent = "Si è verificato un errore. Riprova più tardi.";
+      scene.classList.remove("busy");
+      playing = false;
+    } finally {
+      gift.classList.remove("shaking");
+    }
   }
 
   async function validateVatNumber() {
     const vatNumber = vatNumberInput.value.trim();
+    const playerEmail = playerEmailInput.value.trim();
 
-    if (!vatNumber) {
-      showError("Inserisci la tua Partita IVA");
+    // Email validation
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    if (!vatNumber || !playerEmail) {
+      showError("Inserisci sia la Partita IVA che la tua Email.");
+      return;
+    }
+    if (!emailPattern.test(playerEmail)) {
+      showError("Inserisci un'email valida.");
       return;
     }
 
     try {
       const response = await fetch("api/validate-vat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vatNumber }),
       });
 
@@ -156,51 +158,31 @@ document.addEventListener("DOMContentLoaded", async () => {
       errorMessage.textContent = "";
 
       // Show game section
-      loginSection.classList.remove("active-section");
-      loginSection.classList.add("hidden-section");
       title.classList.add("hidden-section");
-      gameSection.classList.remove("hidden-section");
-      gameSection.classList.add("active-section");
+      showSection(gameSection);
     } catch (error) {
       console.error("Error:", error);
       showError("Si è verificato un errore di connessione. Riprova più tardi.");
     }
   }
 
-  async function selectGift(giftElement, prize) {
-    // Visual feedback on selection
-    gifts.forEach((gift) => {
-      gift.style.opacity = "0.5";
-      gift.style.pointerEvents = "none";
-    });
+  function revealPrize(prize) {
+    prizeNameSpan.textContent = prize;
 
-    giftElement.style.opacity = "1";
+    // Show the opened gift and the greetings, then the prize card
+    scene.classList.add("opened");
 
-    // Show animation (you can enhance this)
-    giftElement.style.transform = "scale(1.2)";
-    giftElement.classList.add("opening");
-
-    setTimeout(async () => {
-      // Update UI for result immediately
-      prizeNameSpan.textContent = prize;
-
-      // Add additional text based on prize type
-      const deliveryInfoElement = document.createElement("p");
-      deliveryInfoElement.className = "delivery-info";
-
-      // Insert the delivery info after the prize name
-      const prizeRevealElement = document.querySelector(".prize-reveal");
-      prizeRevealElement.appendChild(deliveryInfoElement);
-
-      // Show confetti
+    setTimeout(() => {
+      showSection(resultSection);
       startConfetti();
+    }, 2500);
+  }
 
-      // Show result section
-      gameSection.classList.remove("active-section");
-      gameSection.classList.add("hidden-section");
-      resultSection.classList.remove("hidden-section");
-      resultSection.classList.add("active-section");
-    }, 2000);
+  function showSection(section) {
+    [loginSection, gameSection, resultSection].forEach((s) => {
+      s.classList.toggle("active-section", s === section);
+      s.classList.toggle("hidden-section", s !== section);
+    });
   }
 
   function showError(message) {
@@ -209,12 +191,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function startConfetti() {
-    const confettiSettings = {
+    const confetti = new ConfettiGenerator({
       target: "confetti-container",
       max: 150,
       size: 1.5,
-    };
-    const confetti = new ConfettiGenerator(confettiSettings);
+    });
     confetti.render();
 
     // Stop confetti after 5 seconds
