@@ -20,6 +20,42 @@ function respond(int $status, array $body): never
     exit;
 }
 
+/**
+ * Send the response to the browser and close the connection,
+ * so that slow work (e.g. emails) can continue after it.
+ */
+function respondAndContinue(int $status, array $body): void
+{
+    ignore_user_abort(true);
+    set_time_limit(120);
+
+    $json = json_encode($body, JSON_UNESCAPED_UNICODE);
+    http_response_code($status);
+
+    if (function_exists('fastcgi_finish_request')) {
+        // PHP-FPM
+        echo $json;
+        fastcgi_finish_request();
+        return;
+    }
+
+    // mod_php: no compression (it would buffer the output until the script ends),
+    // explicit length and connection close so the browser doesn't wait
+    if (function_exists('apache_setenv')) {
+        apache_setenv('no-gzip', '1');
+    }
+    ini_set('zlib.output_compression', '0');
+    header('Content-Encoding: none');
+    header('Content-Length: ' . strlen($json));
+    header('Connection: close');
+
+    echo $json;
+    while (ob_get_level() > 0) {
+        ob_end_flush();
+    }
+    flush();
+}
+
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($method === 'OPTIONS') {
     http_response_code(204);
@@ -96,15 +132,20 @@ try {
                 respond($status, ['error' => $player]);
             }
 
-            // The game is already recorded: an email failure must not hide the prize
+            // The game is recorded: answer now, send the emails afterwards
+            respondAndContinue(200, ['prize' => $player['prize']]);
+
             try {
                 sendWinnerEmail($player['email'], $playerName, $player['prize']);
+            } catch (Throwable $e) {
+                error_log("Error sending winner email ($vatNumber): " . $e->getMessage());
+            }
+            try {
                 sendCommercialEmail($vatNumber, $playerName, $player['prize'], $playerEmail);
             } catch (Throwable $e) {
-                error_log('Error sending emails: ' . $e->getMessage());
+                error_log("Error sending commercial email ($vatNumber): " . $e->getMessage());
             }
-
-            respond(200, ['prize' => $player['prize']]);
+            exit;
 
         default:
             respond(404, ['error' => 'Not found']);

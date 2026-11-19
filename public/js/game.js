@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Pauses between one screen and the next
   const LOGIN_DELAY_MS = 3000; // login accepted -> tree
   const PRIZE_DELAY_MS = 3500; // opened gift fully visible -> prize card
-  const SCENE_FADE_MS = 500; // keep in sync with .scene-img transition in style.css
+  const SCENE_FADE_MS = 800; // keep in sync with .scene-img transition in style.css
   const SNOW_DURATION_MS = 30000; // snowfall on the prize screen
 
   // Visible area of the 1440x1050 tree images (the rest is empty background)

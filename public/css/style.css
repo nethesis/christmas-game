@@ -170,7 +170,7 @@ input[type="email"]:focus {
     height: auto;
     pointer-events: none;
     user-select: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.8s ease;
 }
 
 .scene-opened {

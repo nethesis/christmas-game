@@ -1,10 +1,21 @@
+<?php
+// Serve the page uncached and add the file modification time to CSS/JS URLs,
+// so browsers always load the latest version after an update.
+header('Cache-Control: no-cache');
+
+function asset(string $path): string
+{
+    $mtime = @filemtime(__DIR__ . '/' . $path);
+    return htmlspecialchars($mtime ? "$path?v=$mtime" : $path);
+}
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scarta il Regalo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
@@ -69,7 +80,7 @@
 
     <div id="snow-container"></div>
 
-    <script src="js/snow.js"></script>
-    <script src="js/game.js"></script>
+    <script src="<?= asset('js/snow.js') ?>"></script>
+    <script src="<?= asset('js/game.js') ?>"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ function createMailer(): PHPMailer
     $mail->Username = (string) env('EMAIL_USER');
     $mail->Password = (string) env('EMAIL_PASS');
     $mail->CharSet = PHPMailer::CHARSET_UTF8;
+    $mail->Timeout = 30; // seconds, SMTP connection/command timeout
     $mail->isHTML(true);
     $mail->setFrom((string) env('MAIL_FROM'));
 
