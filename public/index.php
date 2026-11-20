@@ -69,10 +69,12 @@ function asset(string $path): string
             <div class="result-container">
                 <h1 id="result-title" tabindex="-1" aria-describedby="prize-text">Ecco il tuo regalo!</h1>
                 <div class="prize-card">
-                    <img src="images/prize-card.svg" alt="" class="prize-card-img" width="935" height="659">
-                    <div class="prize-card-text" id="prize-text">
-                        <span class="prize-label">Hai vinto</span>
-                        <span id="prize-name" class="prize-name">Un regalo</span>
+                    <div class="prize-card-box">
+                        <img src="images/prize-card-top.svg" alt="" class="prize-card-img" width="863" height="430">
+                        <div class="prize-card-text" id="prize-text">
+                            <span class="prize-label">Hai vinto</span>
+                            <span id="prize-name" class="prize-name">Un regalo</span>
+                        </div>
                     </div>
                 </div>
                 <p>Abbiamo inviato i dettagli alla tua email. Il nostro team ti contatterà presto!</p>

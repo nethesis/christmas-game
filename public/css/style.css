@@ -261,10 +261,19 @@ input[type="email"]:focus-visible {
     margin-bottom: 10px;
 }
 
+/* Prize card, as drawn in prize-card.svg: the image is only the blue top, CSS draws the white
+   card, which grows with the prize name. cqw = 1% of the white card width (862.75 in the SVG) */
 .prize-card {
-    position: relative;
     container-type: inline-size;
     margin: 0 auto 10px;
+    padding: 3.47% 3.85% 4.97%; /* room for the shadow, as in the original artwork */
+}
+
+.prize-card-box {
+    background: #ffffff;
+    border-radius: 3.81cqw;
+    box-shadow: 0 1.16cqw 4.17cqw rgba(8, 71, 89, 0.1);
+    overflow: hidden;
 }
 
 .prize-card-img {
@@ -273,30 +282,27 @@ input[type="email"]:focus-visible {
     height: auto;
 }
 
-/* White area of prize-card.svg (935x659): x 36-898, y 462-622 */
+/* White area: at least as tall as in the artwork, taller when the name wraps */
 .prize-card-text {
-    position: absolute;
-    left: 3.85%;
-    right: 3.85%;
-    top: 70.1%;
-    height: 24.3%;
+    min-height: 17.39cqw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 20px;
+    padding: 1.5cqw 20px;
+    overflow-wrap: anywhere;
 }
 
 .prize-label {
     color: #666;
-    font-size: max(11px, 2.6cqw);
+    font-size: max(11px, 2.82cqw);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
 .prize-name {
     color: var(--primary-color);
-    font-size: clamp(16px, 5.2cqw, 34px);
+    font-size: clamp(16px, 5.64cqw, 34px);
     font-weight: 500;
     line-height: 1.15;
 }

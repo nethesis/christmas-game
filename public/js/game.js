@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let validating = false;
 
   setupScene();
-  preload(["images/tree-opened.svg", "images/prize-card.svg"]);
+  preload(["images/tree-opened.svg", "images/prize-card-top.svg"]);
 
   // Event listeners
   // Native submit: handles the Enter key and doesn't fire during IME composition
