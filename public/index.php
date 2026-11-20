@@ -54,7 +54,7 @@ function asset(string $path): string
 
         <section id="game-section" class="hidden-section">
             <div class="game-box">
-                <h1 id="game-title" tabindex="-1" aria-describedby="game-hint">Benvenuto, <span id="player-name">Giocatore</span>!</h1>
+                <h1 id="game-title" tabindex="-1" aria-describedby="game-hint">Un caloroso benvenuto a <span id="player-name">Giocatore</span>!</h1>
                 <p id="game-hint">Clicca su un pacco sotto l'albero per scoprire il tuo regalo</p>
                 <div class="scene" id="scene">
                     <img src="images/tree.svg" alt="Albero di Natale con i pacchi regalo" class="scene-img" id="tree-closed" width="1440" height="1050">
