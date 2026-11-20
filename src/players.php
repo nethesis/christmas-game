@@ -33,7 +33,7 @@ function findPlayerByVatNumber(string $vatNumber): ?array
         return [
             'vatNumber' => (string) $player['piva'],
             'name' => trim((string) ($player['partner'] ?? '')),
-            'email' => $player['email'] ?? null,
+            'email' => null,
             'hasPlayed' => false,
             'prize' => null,
             'playedAt' => null,
