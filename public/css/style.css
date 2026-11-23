@@ -225,12 +225,13 @@ input[type="email"]:focus-visible {
     background: var(--bulb);
     border-radius: 50%;
     box-shadow: 0 0 8px 2px var(--bulb);
-    animation: twinkle 2s ease-in-out infinite;
+    animation: blink 1s step-end infinite;
 }
 
-.lights li:nth-child(4n+2)::after { --bulb: #fbc02d; animation-delay: -0.5s; animation-duration: 2.4s; }
-.lights li:nth-child(4n+3)::after { --bulb: #43a047; animation-delay: -1.1s; animation-duration: 1.8s; }
-.lights li:nth-child(4n+4)::after { --bulb: #00a0de; animation-delay: -1.6s; animation-duration: 2.2s; }
+/* Each color blinks at its own rate: red 1s, yellow 1.4s, green 1.9s, blue 2.6s */
+.lights li:nth-child(4n+2)::after { --bulb: #fbc02d; animation-duration: 1.4s; }
+.lights li:nth-child(4n+3)::after { --bulb: #43a047; animation-duration: 1.9s; }
+.lights li:nth-child(4n+4)::after { --bulb: #00a0de; animation-duration: 2.6s; }
 
 /* Top string: drawn with the wire on top and bulbs hanging down, then flipped:
    wire along the form, bulbs pointing up */
@@ -276,10 +277,10 @@ input[type="email"]:focus-visible {
 .lights-left li::after,
 .lights-right li::after { left: 14px; top: calc(50% - 6px); width: 18px; height: 12px; }
 
-/* Slow twinkle, well below 3 flashes per second */
-@keyframes twinkle {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px 2px var(--bulb); }
-    50% { opacity: 0.45; box-shadow: none; }
+/* On for half the period, then off (dimmed, no glow). The fastest color
+   blinks once a second, well below the 3 flashes per second limit */
+@keyframes blink {
+    50% { opacity: 0.25; box-shadow: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
