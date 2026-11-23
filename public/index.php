@@ -37,7 +37,7 @@ function asset(string $path): string
                 <form id="login-form" class="login-card" method="post" novalidate>
                     <p class="login-intro">Il gioco di Natale per i partner</p>
                     <h1 id="login-title">Scarta il tuo regalo di Natale</h1>
-                    <p class="login-lead" id="login-lead">Abbiamo preparato un regalo per ogni partner Nethesis. Inserisci i tuoi dati e scopri cosa ti aspetta.</p>
+                    <p class="login-lead" id="login-lead">Abbiamo preparato un regalo per ogni azienda partner Nethesis. Inserisci i tuoi dati e scopri cosa ti aspetta.</p>
 
                     <div id="error-message" class="error-message" role="alert"></div>
                     <div id="login-info" class="info-message" aria-live="polite"></div>
