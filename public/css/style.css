@@ -228,10 +228,10 @@ input[type="email"]:focus-visible {
     animation: blink 1s step-end infinite;
 }
 
-/* Each color blinks at its own rate: red 1s, yellow 1.4s, green 1.9s, blue 2.6s */
-.lights li:nth-child(4n+2)::after { --bulb: #fbc02d; animation-duration: 1.4s; }
-.lights li:nth-child(4n+3)::after { --bulb: #43a047; animation-duration: 1.9s; }
-.lights li:nth-child(4n+4)::after { --bulb: #00a0de; animation-duration: 2.6s; }
+/* Each color blinks at its own rate: red (c0) 1s, yellow 1.4s, green 1.9s, blue 2.6s */
+.lights .c1::after { --bulb: #fbc02d; animation-duration: 1.4s; }
+.lights .c2::after { --bulb: #43a047; animation-duration: 1.9s; }
+.lights .c3::after { --bulb: #00a0de; animation-duration: 2.6s; }
 
 /* Top string: drawn with the wire on top and bulbs hanging down, then flipped:
    wire along the form, bulbs pointing up */
