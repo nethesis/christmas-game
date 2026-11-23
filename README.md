@@ -39,9 +39,9 @@ by the Apache user (`www-data`):
 
 | File | Content |
 |------|---------|
-| `data/players.jsonl` | Authorized partners, one line per partner: `{"piva": "...", "partner": "..."}`. The email is the one the player enters at login |
+| `data/players.jsonl` | Authorized partners, one line per partner: `{"piva": "...", "partner": "..."}`. The email is the one the player enters at login. VAT numbers are compared ignoring case, spaces, dots and dashes |
 | `data/prizes.jsonl` | Prizes: `{"id": 1, "name": "...", "probability": 10, "max": 5, "used": 0}`. Without `max`/`used` the prize is unlimited |
-| `data/active_players/<piva>.json` | Result of each partner's play |
+| `data/active_players/<piva>.json` (piva uppercase, without spaces, dots and dashes) | Result of each partner's play |
 
 The `used` counter of the prizes is saved right away on every play; an exclusive lock
 (`data/game.lock`) prevents double plays and prizes beyond `max` with concurrent requests.

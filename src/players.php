@@ -2,10 +2,19 @@
 
 declare(strict_types=1);
 
+/**
+ * VAT number as compared and stored: uppercase, without spaces, dots and dashes,
+ * so "CHE-241.741.922" and "che 241741922" are the same partner.
+ */
+function normalizeVatNumber(string $vatNumber): string
+{
+    return strtoupper(preg_replace('/[\s.\-]+/u', '', $vatNumber));
+}
+
 function activePlayerFile(string $vatNumber): string
 {
     // VAT numbers come from players.jsonl, but never trust them as a path
-    $safe = preg_replace('/[^A-Za-z0-9_-]/', '_', $vatNumber);
+    $safe = preg_replace('/[^A-Za-z0-9_-]/', '_', normalizeVatNumber($vatNumber));
     return ACTIVE_PLAYERS_DIR . "/$safe.json";
 }
 
@@ -16,8 +25,13 @@ function activePlayerFile(string $vatNumber): string
  */
 function findPlayerByVatNumber(string $vatNumber): ?array
 {
+    $vatNumber = normalizeVatNumber($vatNumber);
+    if ($vatNumber === '') {
+        return null;
+    }
+
     foreach (readJsonl(PLAYERS_JSONL_FILE) as $player) {
-        if ((string) ($player['piva'] ?? '') !== $vatNumber) {
+        if (normalizeVatNumber((string) ($player['piva'] ?? '')) !== $vatNumber) {
             continue;
         }
 

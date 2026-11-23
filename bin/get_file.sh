@@ -9,7 +9,8 @@ if ! command -v jq &> /dev/null; then
 fi
 
 if [ -n "$1" ]; then
-    FILE="$1.json"
+    # Same normalization as the game: uppercase, no spaces, dots and dashes
+    FILE="$(printf '%s' "$1" | tr -d ' .-' | tr '[:lower:]' '[:upper:]').json"
 else
     mapfile -t FILES < <(ls -1 *.json 2>/dev/null)
     if [ ${#FILES[@]} -eq 0 ]; then
