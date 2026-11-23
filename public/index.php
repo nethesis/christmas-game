@@ -57,7 +57,7 @@ function asset(string $path): string
                     <button type="submit" id="validate-btn" class="btn"><span class="spinner" aria-hidden="true"></span>Scopri il tuo regalo</button>
 
                     <p class="fine-print">I dati servono solo per il gioco e per consegnarti il premio.
-                        <a href="https://www.nethesis.it/privacy" target="_blank" rel="noopener">Informativa privacy</a>
+                        <a href="https://www.nethesis.it/info/privacy-policy" target="_blank" rel="noopener">Informativa privacy</a>
                         · Domande? Scrivi a <a href="mailto:sales@nethesis.it">sales@nethesis.it</a></p>
                 </form>
             </div>
