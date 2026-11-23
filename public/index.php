@@ -18,7 +18,7 @@ function asset(string $path): string
     <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -29,27 +29,39 @@ function asset(string $path): string
 
         <main class="screens">
         <section id="login-section" class="active-section">
-            <div class="login-box">
-                <div class="title">
-                    <h1 id="login-title">Scarta il regalo</h1>
+            <div class="login-wrap">
+                <div class="login-art">
+                    <img src="images/login-tree.svg" alt="" width="1120" height="1060">
                 </div>
 
-                <form id="login-form" class="form-container" method="post" novalidate>
+                <form id="login-form" class="login-card" method="post" novalidate>
+                    <p class="login-intro">Il gioco di Natale per i partner</p>
+                    <h1 id="login-title">Scarta il tuo regalo di Natale</h1>
+                    <p class="login-lead" id="login-lead">Abbiamo preparato un regalo per ogni partner Nethesis. Inserisci i tuoi dati e scopri cosa ti aspetta.</p>
+
+                    <div id="error-message" class="error-message" role="alert"></div>
+                    <div id="login-info" class="info-message" aria-live="polite"></div>
+
                     <div class="form-group">
                         <label for="vat-number">Partita IVA</label>
-                        <input type="text" id="vat-number" name="vatNumber" placeholder="es. 01234567890" required autofocus aria-describedby="login-title"
-                               autocorrect="off" autocapitalize="none" spellcheck="false">
+                        <input type="text" id="vat-number" name="vatNumber" placeholder="es. 01234567890" required autofocus
+                               aria-describedby="vat-help" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+                        <p class="help" id="vat-help">Serve solo per verificare che tu sia un partner Nethesis.</p>
                     </div>
                     <div class="form-group">
                         <label for="player-email">Email</label>
                         <input type="email" id="player-email" name="playerEmail" placeholder="es. nome@azienda.it" required
-                               autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
+                               aria-describedby="email-help" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
+                        <p class="help" id="email-help">Qui ti invieremo la conferma del premio.</p>
                     </div>
-                    <button type="submit" id="validate-btn" class="btn">Verifica e gioca</button>
-                    <div id="error-message" class="error-message" aria-live="polite"></div>
-                    <div id="login-info" class="info-message" aria-live="polite"></div>
+                    <button type="submit" id="validate-btn" class="btn"><span class="spinner" aria-hidden="true"></span>Scopri il tuo regalo</button>
+
+                    <p class="fine-print">I dati servono solo per il gioco e per consegnarti il premio.
+                        <a href="https://www.nethesis.it/privacy" target="_blank" rel="noopener">Informativa privacy</a>
+                        · Domande? Scrivi a <a href="mailto:sales@nethesis.it">sales@nethesis.it</a></p>
                 </form>
             </div>
+            <footer class="login-footer">Nethesis s.r.l. · Strada degli Olmi, 12 · 61122 Pesaro (PU)</footer>
         </section>
 
         <section id="game-section" class="hidden-section">

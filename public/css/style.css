@@ -8,6 +8,11 @@
     --light-bg: #f5f5f5;
     --border-color: #6b8794;    /* input borders: 3.8:1 on white (non-text minimum 3:1) */
     --page-bg: #eef8fc;
+    --pale-bg: #d9f0fa;
+    --brand-dark: #0080b1;      /* button hover, links */
+    --navy: #084759;
+    --ink: #1e1e1c;
+    --muted-text: #5b6b73;      /* 5.6:1 on white */
 }
 
 * {
@@ -50,29 +55,14 @@ section.active-section {
     display: flex;
 }
 
-.login-box,
 .game-box,
 .result-container {
     margin: auto;
     width: 100%;
 }
 
-.login-box {
-    max-width: 500px;
-}
-
-.title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 h1 {
     font-weight: 500;
-}
-
-.title h1 {
-    color: var(--text-color);
-    font-size: 2.5em;
 }
 
 section {
@@ -88,9 +78,65 @@ section {
     display: none;
 }
 
-.form-container {
-    max-width: 500px;
+/* Login: tree illustration on the left, white card with the form on the right */
+#login-section.active-section {
+    flex-direction: column;
+    padding: 0;
+    background: linear-gradient(180deg, var(--pale-bg) 0%, var(--page-bg) 55%, #ffffff 100%);
+}
+
+.login-wrap {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 28px 32px 16px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+    align-content: center;
+}
+
+.login-art img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 18px 30px rgba(8, 71, 89, 0.1));
+}
+
+.login-card {
+    justify-self: end;
+    width: 100%;
+    max-width: 460px;
+    padding: 34px 40px 28px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(8, 71, 89, 0.12);
+}
+
+.login-intro {
+    margin-bottom: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4b5563;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+#login-title {
+    margin-bottom: 12px;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy);
+}
+
+.login-lead {
+    margin-bottom: 22px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted-text);
 }
 
 .form-group {
@@ -99,75 +145,147 @@ section {
 
 label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
 }
 
 input[type="text"],
 input[type="email"] {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
+    height: 50px;
+    padding: 0 14px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--ink);
     font: inherit;
-    font-size: max(1rem, 1em); /* never below 16px: smaller makes iOS zoom in on focus */
-    transition: border-color 0.3s;
+    font-size: 16px; /* never below 16px: smaller makes iOS zoom in on focus */
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input::placeholder {
+    color: #6f7f87; /* 4.5:1 on white */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus {
-    border-color: var(--primary-color);
+    outline: none;
+    border-color: var(--brand-color);
+    box-shadow: 0 0 0 4px rgba(0, 160, 222, 0.15);
 }
 
-input[type="text"]:focus-visible,
-input[type="email"]:focus-visible {
-    outline: 3px solid var(--secondary-color);
-    outline-offset: 2px;
+/* Visible ring also in Forced Colors Mode, where box-shadow isn't drawn */
+@media (forced-colors: active) {
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        outline: 3px solid CanvasText;
+    }
+}
+
+.help {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-text);
 }
 
 .btn {
     font-family: inherit; /* buttons don't inherit the page font by default */
-    background-color: var(--brand-color);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: block;
     width: 100%;
-    font-weight: 500;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--brand-color);
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.1s;
 }
 
 .btn:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--brand-dark);
 }
 
 .btn:active {
-    transform: scale(0.98);
+    transform: translateY(1px);
+}
+
+.btn:focus-visible {
+    outline: 3px solid var(--navy);
+    outline-offset: 2px;
+}
+
+.btn:disabled {
+    opacity: 0.75;
+    cursor: progress;
+}
+
+.spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.btn:disabled .spinner {
+    display: block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-message,
+.info-message {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.error-message {
+    background: #fdecea;
+    color: #9b2a22;
 }
 
 .info-message {
-    color: var(--primary-color);
+    background: var(--pale-bg);
+    color: var(--navy);
     font-weight: 500;
-    text-align: center;
 }
 
+.error-message:empty,
 .info-message:empty {
     display: none;
 }
 
-.btn:disabled {
-    opacity: 0.6;
-    cursor: wait;
+.fine-print {
+    margin-top: 20px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--muted-text);
 }
 
-.error-message {
-    color: var(--error-color);
-    margin-top: 15px;
+.fine-print a {
+    color: var(--brand-dark);
+}
+
+.login-footer {
+    padding: 8px 16px 28px;
     text-align: center;
-    min-height: 24px;
+    font-size: 12.5px;
+    color: var(--muted-text);
 }
 
 /* Game Section */
@@ -312,19 +430,6 @@ input[type="email"]:focus-visible {
     color: #666;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 10px 0;
-    color: #666;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
 /* Snowfall */
 #snow-container {
     position: fixed;
@@ -340,38 +445,57 @@ footer {
 .top-banner {
     background-color: var(--brand-color);
     width: 100%;
-    padding: 15px 0px 10px 0px;
-    text-align: center;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .top-banner .logo {
-    max-width: 250px;
-    height: auto;
+    width: auto;
+    height: 44px;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    
-    .title h1 {
-        font-size: 2em; /* Adjust title size */
+@media (max-width: 900px) {
+    .top-banner {
+        height: 68px;
+    }
+
+    .top-banner .logo {
+        height: 34px;
+    }
+
+    .login-wrap {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 20px 18px;
+    }
+
+    .login-art {
+        width: 100%;
+        max-width: 380px;
+        margin: 0 auto;
+    }
+
+    .login-card {
+        justify-self: stretch;
+        max-width: none;
+        padding: 28px 22px 24px;
+    }
+
+    #login-title {
+        font-size: 27px;
     }
 }
 
 @media (max-width: 480px) {
-    
     section {
         padding: 15px;
     }
-    
-    .title h1 {
-        font-size: 1.5em; /* Further adjust title size */
-    }
-    
-    .form-container {
-        padding: 10px;
-    }
-    
-    .btn {
-        font-size: 0.9em; /* Adjust button font size */
+
+    .login-art {
+        max-width: 260px;
     }
 }
+
