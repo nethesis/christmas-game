@@ -9,8 +9,9 @@ if ! command -v jq &> /dev/null; then
 fi
 
 if [ -n "$1" ]; then
-    # Same normalization as the game: uppercase, no spaces, dots and dashes
-    FILE="$(printf '%s' "$1" | tr -d ' .-' | tr '[:lower:]' '[:upper:]').json"
+    # Same normalization as the game: uppercase, no spaces, dots and dashes,
+    # no "IT" prefix before an 11-digit Italian VAT number
+    FILE="$(printf '%s' "$1" | tr -d ' .-' | tr '[:lower:]' '[:upper:]' | sed -E 's/^IT([0-9]{11})$/\1/').json"
 else
     mapfile -t FILES < <(ls -1 *.json 2>/dev/null)
     if [ ${#FILES[@]} -eq 0 ]; then

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 /**
  * VAT number as compared and stored: uppercase, without spaces, dots and dashes,
- * so "CHE-241.741.922" and "che 241741922" are the same partner.
+ * and without the "IT" prefix of Italian VAT numbers (IT + 11 digits),
+ * so "CHE-241.741.922" and "che 241741922", or "IT02280550985" and
+ * "02280550985", are the same partner.
  */
 function normalizeVatNumber(string $vatNumber): string
 {
-    return strtoupper(preg_replace('/[\s.\-]+/u', '', $vatNumber));
+    $vatNumber = strtoupper(preg_replace('/[\s.\-]+/u', '', $vatNumber));
+    return preg_replace('/^IT(\d{11})$/', '$1', $vatNumber);
 }
 
 function activePlayerFile(string $vatNumber): string
