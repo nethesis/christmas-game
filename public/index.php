@@ -8,30 +8,6 @@ function asset(string $path): string
     $mtime = @filemtime(__DIR__ . '/' . $path);
     return htmlspecialchars($mtime ? "$path?v=$mtime" : $path);
 }
-
-// Decorative strings of Christmas lights around the login: each bulb draws its own
-// piece of wire. Colors (c0-c3) follow one chain going up the left side, across
-// the top and down the right side, so they never repeat at the corners.
-function lights(array $strings): string
-{
-    $html = '';
-    $bulb = 0;
-    foreach ($strings as $side => $bulbs) {
-        $colors = [];
-        for ($i = 0; $i < $bulbs; $i++) {
-            $colors[] = 'c' . ($bulb++ % 4);
-        }
-        if ($side === 'left') {
-            $colors = array_reverse($colors); // the chain goes up, the list goes down
-        }
-        $html .= "<ul class=\"lights lights-$side\" aria-hidden=\"true\">";
-        foreach ($colors as $color) {
-            $html .= "<li class=\"$color\"></li>";
-        }
-        $html .= '</ul>';
-    }
-    return $html;
-}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -53,8 +29,6 @@ function lights(array $strings): string
 
         <main class="screens">
         <section id="login-section" class="active-section">
-            <div class="lights-frame">
-            <?= lights(['left' => 9, 'top' => 13, 'right' => 9]) ?>
             <div class="login-box">
                 <div class="title">
                     <h1 id="login-title">Scarta il regalo</h1>
@@ -75,7 +49,6 @@ function lights(array $strings): string
                     <div id="error-message" class="error-message" aria-live="polite"></div>
                     <div id="login-info" class="info-message" aria-live="polite"></div>
                 </form>
-            </div>
             </div>
         </section>
 
