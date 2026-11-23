@@ -8,6 +8,12 @@ function asset(string $path): string
     $mtime = @filemtime(__DIR__ . '/' . $path);
     return htmlspecialchars($mtime ? "$path?v=$mtime" : $path);
 }
+
+// Decorative string of Christmas lights: each bulb draws its own piece of wire
+function lights(string $side, int $bulbs): string
+{
+    return "<ul class=\"lights lights-$side\" aria-hidden=\"true\">" . str_repeat('<li></li>', $bulbs) . '</ul>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -29,6 +35,10 @@ function asset(string $path): string
 
         <main class="screens">
         <section id="login-section" class="active-section">
+            <div class="lights-frame">
+            <?= lights('top', 13) ?>
+            <?= lights('left', 9) ?>
+            <?= lights('right', 9) ?>
             <div class="login-box">
                 <div class="title">
                     <h1 id="login-title">Scarta il regalo</h1>
@@ -49,6 +59,7 @@ function asset(string $path): string
                     <div id="error-message" class="error-message" aria-live="polite"></div>
                     <div id="login-info" class="info-message" aria-live="polite"></div>
                 </form>
+            </div>
             </div>
         </section>
 
