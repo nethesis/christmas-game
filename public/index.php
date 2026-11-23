@@ -61,7 +61,7 @@ function asset(string $path): string
                         · Domande? Scrivi a <a href="mailto:sales@nethesis.it">sales@nethesis.it</a></p>
                 </form>
             </div>
-            <footer class="login-footer">Nethesis s.r.l. · Strada degli Olmi, 12 · 61122 Pesaro (PU)</footer>
+            <footer class="login-footer">Nethesis s.r.l. · Strada degli Olmi, 8 · 61122 Pesaro (PU)</footer>
         </section>
 
         <section id="game-section" class="hidden-section">
